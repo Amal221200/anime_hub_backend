@@ -14,17 +14,16 @@ const app = express();
 
 app.use(cors(
     {
-        "origin": "*",
-        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: ['*'],
-        optionsSuccessStatus: 201,
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
+        origin: [process.env.ADMIN_ORIGIN, process.env.MAIN_ORIGIN],
+        optionsSuccessStatus: 201
     }
 ))
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.get("/", async (_req, res) => {
     console.log(process.env.SECRET_KEY);
