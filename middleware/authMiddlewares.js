@@ -7,8 +7,8 @@ dotenv.config()
 
 export const handleUser = async (req, res, next) => {
     try {
-        const token = req.cookies?.jwt || req.headers.cookie.split('=').at(-1);
-console.log(token);
+        const token = req.cookies?.jwt
+        console.log(token);
         if (!token) {
             return res.status(401).json("Unauthorized user");
         }
