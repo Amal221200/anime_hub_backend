@@ -81,7 +81,7 @@ export const signUp = async (req, res) => {
 
         await newUser.save();
         createToken(res, newUser._id);
-        return res.status(201).json({ user: { _id: newUser._id, username: newUser.username, email: newUser.email, } });
+        return res.status(201).json({ _id: newUser._id, username: newUser.username, email: newUser.email, });
     } catch (error) {
         console.log('signup', error);
         return res.status(500).json("Internal Server Error")
