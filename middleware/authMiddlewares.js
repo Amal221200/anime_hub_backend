@@ -7,13 +7,13 @@ dotenv.config()
 
 export const handleUser = async (req, res, next) => {
     try {
-        const token = req.cookies?.jwt
-        console.log(token);
+        const token = req.headers.cookie;
+console.log(token);
         if (!token) {
             return res.status(401).json("Unauthorized user");
         }
 
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const decoded = jwt.verify(token.split('=').at(-1), process.env.SECRET_KEY);
         const user = await User.findById(decoded.userId);
         req.user = user;
         next();
