@@ -9,7 +9,7 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 
 dotenv.config();
 
-connectToDB();
+
 const app = express();
 
 app.use(cors(
@@ -36,6 +36,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/anime", animeRoutes);
 app.use("/api/review", reviewRoutes);
 
-app.listen(3000, () => {
+connectToDB(() => app.listen(3000, () => {
     console.log(`Server Listening at http://localhost:${3000}`);
-})
+}))

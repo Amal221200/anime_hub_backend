@@ -24,7 +24,7 @@ export const signIn = async (req, res) => {
         }
 
         const token = createToken(res, user._id);
-        res.append('Set-Cookie', `token=${token}; HttpOnly`)
+        res.append('Set-Cookie', `token=${token}`)
         return res.json({ user, token });
     } catch (error) {
         console.log('signIn', error);
@@ -53,7 +53,7 @@ export const signOut = async (req, res) => {
 export const getSession = async (req, res) => {
     try {
         const token = req.cookies?.jwt
-        res.append('Set-Cookie', `token=${token}; HttpOnly`)
+        res.append('Set-Cookie', `token=${token}`)
         return res.json({ user: req.user, token });
     } catch (error) {
         console.log('getSession', error);
@@ -83,7 +83,7 @@ export const signUp = async (req, res) => {
 
         await newUser.save();
         const token = createToken(res, newUser._id);
-        res.append('Set-Cookie', `token=${token}; HttpOnly`)
+        res.append('Set-Cookie', `token=${token}`)
         return res.status(201).json({ user: { _id: newUser._id, username: newUser.username, email: newUser.email, }, token });
     } catch (error) {
         console.log('signup', error);

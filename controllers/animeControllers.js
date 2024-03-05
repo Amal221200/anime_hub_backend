@@ -5,6 +5,7 @@ const validateAnime = (anime) => {
     const exp = title && artist && release !== undefined && watchLink && status && studio && episodes !== undefined && episodeDuration !== undefined && genre && genre.length > 0 && imageLink
     return Boolean(exp);
 }
+
 export const getAnimes = async (req, res) => {
     try {
         const title = req.query?.title
