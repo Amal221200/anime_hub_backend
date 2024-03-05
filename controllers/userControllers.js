@@ -23,9 +23,8 @@ export const signIn = async (req, res) => {
             return res.status(400).json("Incorrect Password");
         }
 
-        const token = createToken(res, user._id);
-        res.append('Set-Cookie', `token=${token}`)
-        return res.json({ user, token });
+        createToken(res, user._id);
+        return res.json({ user });
     } catch (error) {
         console.log('signIn', error);
         return res.status(500).json("Internal Server Error");
@@ -42,7 +41,7 @@ export const signOut = async (req, res) => {
             httpOnly: true,
             expiresIn: new Date(0)
         });
-        res.append('Set-Cookie', `token='';`)
+
         return res.json("Logged out successfully.")
     } catch (error) {
         console.log('signIn', error);
@@ -52,8 +51,7 @@ export const signOut = async (req, res) => {
 
 export const getSession = async (req, res) => {
     try {
-        const token = req.cookies?.jwt
-        res.append('Set-Cookie', `token=${token}`)
+
         return res.json({ user: req.user, token });
     } catch (error) {
         console.log('getSession', error);
@@ -82,9 +80,8 @@ export const signUp = async (req, res) => {
         const newUser = new User({ username: body.username, email: body.email, password: hashedPassword });
 
         await newUser.save();
-        const token = createToken(res, newUser._id);
-        res.append('Set-Cookie', `token=${token}`)
-        return res.status(201).json({ user: { _id: newUser._id, username: newUser.username, email: newUser.email, }, token });
+        createToken(res, newUser._id);
+        return res.status(201).json({ user: { _id: newUser._id, username: newUser.username, email: newUser.email, } });
     } catch (error) {
         console.log('signup', error);
         return res.status(500).json("Internal Server Error")

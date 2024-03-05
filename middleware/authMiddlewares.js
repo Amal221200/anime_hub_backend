@@ -8,7 +8,7 @@ dotenv.config()
 export const handleUser = async (req, res, next) => {
     try {
         const token = req.headers.cookie;
-console.log(token);
+
         if (!token) {
             return res.status(401).json("Unauthorized user");
         }
