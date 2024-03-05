@@ -17,7 +17,9 @@ app.use(cors(
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
         origin: [process.env.ADMIN_ORIGIN, process.env.MAIN_ORIGIN],
-        optionsSuccessStatus: 201
+        optionsSuccessStatus: 201,
+        preflightContinue: true,
+        allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "x-client-key", "x-client-token", "x-client-secret", "Authorization"]
     }
 ))
 
