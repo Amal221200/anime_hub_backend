@@ -51,8 +51,7 @@ export const signOut = async (req, res) => {
 
 export const getSession = async (req, res) => {
     try {
-
-        return res.json({ user: req.user, token });
+        return res.json(req.user);
     } catch (error) {
         console.log('getSession', error);
         return res.status(500).json("Internal Server Error");
