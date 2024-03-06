@@ -24,7 +24,7 @@ export const signIn = async (req, res) => {
         }
 
         createToken(res, user._id);
-        return res.json({ user });
+        return res.json(user);
     } catch (error) {
         console.log('signIn', error);
         return res.status(500).json("Internal Server Error");
