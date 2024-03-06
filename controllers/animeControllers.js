@@ -1,7 +1,7 @@
 import Anime from "../models/animeModel.js";
 
 const validateAnime = (anime) => {
-    const { title, artist, release, watchLink, status, studio, episodes, episodeDuration, genre, imageLink } = anime;
+    const { title, artist, release, watchLink, status, studio, episodes, episodeDuration, genre , imageLink} = anime;
     const exp = title && artist && release !== undefined && watchLink && status && studio && episodes !== undefined && episodeDuration !== undefined && genre && genre.length > 0 && imageLink
     return Boolean(exp);
 }
@@ -72,10 +72,11 @@ export const editAnime = async (req, res) => {
         const id = req.params.id
         const body = req.body;
         const animeExist = await Anime.findById(id);
-
+        
         if (!animeExist) {
             return res.status(404).json("Anime not found");
         }
+
 
         animeExist.$set({
             title: body?.title || animeExist.title,
@@ -90,6 +91,7 @@ export const editAnime = async (req, res) => {
             episodes: body?.episodes || animeExist.episodes,
             artist: body?.artist || animeExist.artist
         });
+        
         await animeExist.save();
         return res.json(animeExist);
     } catch (error) {

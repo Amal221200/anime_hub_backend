@@ -6,6 +6,8 @@ import connectToDB from "./db/connectToDB.js";
 import userRoutes from "./routes/userRoutes.js";
 import animeRoutes from "./routes/animeRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import upload from "./middleware/multerMiddleware.js";
+import { uploadFile } from "./controllers/uploadController.js";
 
 dotenv.config();
 
@@ -19,10 +21,9 @@ app.use(cors(
         origin: [process.env.ADMIN_ORIGIN, process.env.MAIN_ORIGIN],
         optionsSuccessStatus: 201,
         preflightContinue: true,
-        allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "x-client-key", "x-client-token", "x-client-secret", "Authorization"]
     }
 ))
-
+app.use('/uploads', express.static('./public/uploads'))
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
@@ -31,6 +32,8 @@ app.get("/", async (_req, res) => {
     console.log(process.env.SECRET_KEY);
     return res.json('anime');
 })
+
+app.post('/api/upload', upload.single('image'), uploadFile);
 
 app.use("/api/user", userRoutes);
 app.use("/api/anime", animeRoutes);
