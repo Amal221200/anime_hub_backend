@@ -4,7 +4,7 @@ import Anime from "../models/animeModel.js";
 export const getReviews = async (req, res) => {
     try {
         const query = req.query
-        const reviews = await Review.find(query.anime ? { anime: query.anime  } : {}).populate("user");
+        const reviews = await Review.find(query.anime ? { anime: query.anime } : {}).populate("user");
 
         return res.status(200).json(reviews);
     } catch (error) {
@@ -29,8 +29,8 @@ export const addReview = async (req, res) => {
 
         anime.reviews.push(review._id)
         await anime.save();
-
-        return res.status(201).json(review);
+        const data = await review.populate("user")
+        return res.status(201).json(data);
     } catch (error) {
         console.log('add review', error);
         return res.status(500).json("Internal Server Error");
@@ -39,7 +39,7 @@ export const addReview = async (req, res) => {
 
 export const deleteReview = async (req, res) => {
     try {
-        
+
         const id = req.params.id;
         const review = await Review.findById(id);
 
