@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import animeRoutes from "./routes/animeRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import upload from "./middleware/multerMiddleware.js";
+import path from "path"
 import { uploadFile } from "./controllers/uploadController.js";
 
 dotenv.config();
@@ -40,5 +41,6 @@ app.use("/api/anime", animeRoutes);
 app.use("/api/review", reviewRoutes);
 
 connectToDB(() => app.listen(3000, () => {
+    console.log(import.meta.dirname);
     console.log(`Server Listening at http://localhost:${3000}`);
 }))
