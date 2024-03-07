@@ -3,6 +3,8 @@ import path from "path"
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
+        console.log(path.join(import.meta.dirname, "..", "public", "uploads"));
+        
         cb(null, path.join(import.meta.dirname, "..", "public", "uploads"))
     },
     filename(req, file, cb) {
