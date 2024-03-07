@@ -41,6 +41,5 @@ app.use("/api/anime", animeRoutes);
 app.use("/api/review", reviewRoutes);
 
 connectToDB(() => app.listen(3000, () => {
-    console.log(import.meta.dirname);
     console.log(`Server Listening at http://localhost:${3000}`);
 }))
