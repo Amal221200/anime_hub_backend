@@ -3,9 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export default async function connectToDB(callback){
-    connect(process.env.DATABASE_URI).then(()=> {
-        console.log("Connected")
-        callback()
-    })
+export default async function connectToDB(){
+    await connect(process.env.DATABASE_URI);
+    console.log("Connected");
 }

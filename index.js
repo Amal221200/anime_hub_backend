@@ -40,6 +40,11 @@ app.use("/api/user", userRoutes);
 app.use("/api/anime", animeRoutes);
 app.use("/api/review", reviewRoutes);
 
-connectToDB(() => app.listen(3000, () => {
-    console.log(`Server Listening at http://localhost:${3000}`);
-}))
+async function main(){
+    await connectToDB();
+    app.listen(3000, () => {
+        console.log(`Server Listening at http://localhost:${3000}`);
+    })
+}
+
+main()
