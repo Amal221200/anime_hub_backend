@@ -86,3 +86,43 @@ export const signUp = async (req, res) => {
         return res.status(500).json("Internal Server Error")
     }
 }
+
+
+// Admin Controllers
+
+export const getAllUser = async (req, res) => {
+    try {
+        const { username } = req.query;
+        const users = await User.find(username ? { $regex: new RegExp(username, 'i') } : {}).select(['_id', 'username', 'email', 'role']);
+        return res.json(users);
+    } catch (error) {
+        console.log('getAllUser', error);
+        return res.status(500).json("Internal Server Error")
+    }
+}
+
+export const updateUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { role } = req.body
+        const user = await User.findById(id);
+        user.role = role
+        await user.save()
+        return res.json(user);
+    } catch (error) {
+        console.log('updateUser', error);
+        return res.status(500).json("Internal Server Error")
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const user = await User.findById(id);
+        await user.deleteOne();
+        return res.json(user);
+    } catch (error) {
+        console.log('deleteUser', error);
+        return res.status(500).json("Internal Server Error")
+    }
+}
