@@ -93,7 +93,7 @@ export const signUp = async (req, res) => {
 export const getAllUser = async (req, res) => {
     try {
         const { username } = req.query;
-        const users = await User.find(username ? { $regex: new RegExp(username, 'i') } : {}).select(['_id', 'username', 'email', 'role']);
+        const users = await User.find(username ? { username: { $regex: new RegExp(username, 'i') } } : {}).select(['_id', 'username', 'email', 'role']);
         return res.json(users);
     } catch (error) {
         console.log('getAllUser', error);
